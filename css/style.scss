@@ -1,0 +1,42 @@
+@charset "utf-8";
+
+@use "destyle";
+@use "doru";
+@use "breakpoint" as b;
+@use "header";
+@use "drower";
+@use "top";
+@use "about";
+@use "merit";
+@use "vendor";
+@use "infomation";
+@use "QandA";
+@use "footer";
+
+
+@include b.mq(tab) {}
+
+@include b.mq(mob) {}
+
+//  <!------------------------------------------  -->
+
+html{
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: doru.$backgroundColor;
+    color: doru.$fontColor;
+    line-height: 1.7;
+    font-family: 'Noto Sans JP', sans-serif;
+    
+}
+
+main{
+    margin: 0 0.5rem;
+    position: relative;
+}
+
+h2{
+    font-size: doru.$subTitle;
+}

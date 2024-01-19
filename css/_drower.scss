@@ -1,0 +1,174 @@
+@charset "UTF-8";
+
+@use "doru";
+@use "breakpoint" as b;
+
+:root {
+    --drawerColor: #E4C22B;
+    /* ドロワーボタンとMENUの色。藍鉄色 */
+    --barColor: #FFFFFF;
+    /* ドロワーボタンのアニメーションするバーの色。月白色 */
+    --menuColor: linear-gradient(109.6deg, rgb(220, 212, 143) 11.2%, rgba(237, 246, 250, 1) 100.2%);
+    /* メニューの背景色。グラデーションなのでbackground-imageで指定 */
+}
+
+#drawerMenu {
+
+    ul {
+        justify-content: space-evenly;
+        align-items: center;
+
+        li {
+            width: fit-content;
+            text-align: center;
+        }
+
+        .drowerLi {
+            color: white;
+            background-color: doru.$yellowColor;
+            border-radius: 1rem;
+            margin-top: 2.5rem;
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
+
+        a {
+            display: block;
+            margin: 1rem;
+            /* マウスが反応する範囲を少し広げている*/
+            opacity: 1;
+            transition: all .4s ease-in-out;
+        }
+
+        @media (width >=768px) {
+            display: none;
+        }
+    }
+}
+
+.toggleButton {
+    display: none;
+
+    @include b.mq(tab) {
+        position: fixed;
+        top: 5px;
+        right: 10px;
+        width: 50px;
+        height: 70px;
+        display: block;
+        /* display:none;を解除するために入れている */
+        background: var(--drawerColor);
+        border-radius: 5px;
+        z-index: 1000000;
+    }
+
+    span {
+        width: 60%;
+        height: 4px;
+        display: block;
+        position: absolute;
+        left: 20%;
+        background-color: var(--barColor);
+        border-radius: 5px;
+        transition: all 0.2s linear;
+    }
+
+    span:nth-of-type(1) {
+        top: 20px;
+        transform: rotate(0);
+    }
+
+    span:nth-of-type(2) {
+        top: 33px;
+        transform: scale(1);
+    }
+
+    span:nth-of-type(3) {
+        bottom: 20px;
+        transform: rotate(0);
+    }
+}
+
+/* アンカーリンクにマウスが乗ると、他のアンカーリンクが少し薄くなる指定 */
+#drawerMenu ul:has(a:hover) a:not(:hover) {
+    opacity: 0.3;
+}
+
+@include b.mq(tab) {
+    /* メディアクエリの値はお好みで */
+
+    .close span:nth-of-type(1) {
+        top: 33px;
+        transform: rotate(-45deg);
+    }
+
+    .close span:nth-of-type(2) {
+        transform: scale(0);
+    }
+
+    .close span:nth-of-type(3) {
+        bottom: 33px;
+        transform: rotate(45deg);
+    }
+
+    #drawerMenu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        transition: all 0.3s linear;
+        width: 100%;
+        max-width: 200px;
+    }
+
+    #drawerMenu.open {
+        right: 0;
+        z-index: 1000;
+    }
+
+    #drawerMenu ul {
+        display: block;
+        padding: 20px 20px 20px 20px;
+        background-color: doru.$yellowColor;
+        overflow: hidden;
+        text-align: center;
+        list-style-type: none;
+        border-radius: 10px 0 0 10px;
+        position: relative;
+        top: 78px;
+    }
+
+    #drawerMenu li {
+        color: white;
+        width: 100%;
+    }
+
+    #drawerMenu a {
+        position: relative;
+        display: inline-block;
+        transition: .3s;
+    }
+
+    #drawerMenu a:hover {
+        color: doru.$fontColor;
+        transition: 0.5s;
+    }
+
+    #drawerMenu a::after {
+        position: absolute;
+        bottom: .3em;
+        left: 0;
+        content: '';
+        width: 100%;
+        height: 2px;
+        background-color: #382710;
+        opacity: 0;
+        transition: .3s;
+    }
+
+    #drawerMenu a:hover::after {
+        bottom: 0;
+        color: doru.$fontColor;
+        transition: 0.4s;
+        opacity: 1;
+    }
+}
